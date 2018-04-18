@@ -1,0 +1,50 @@
+<div class="container-fluid dashboardcontainer">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-center">
+          <img style="width:100px;" class="splashscreenlogo" src="/assets/reddrop_logo.png">
+          <h2><strong>Red Drop - Dashboard</strong></h2>
+      </div>
+  <div class="getdonors">
+    <h3 class="text-center">Post for Donors</h3>
+  <mat-form-field class="example-full-width">
+      <input matInput placeholder="Patient Name"  [(ngModel)]="patientname" value="">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Patient Blood Group"  [(ngModel)]="patientbloodgroup" value="">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Patient Contact Number"  [(ngModel)]="patientcontactnumber" value="">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Patient Latitude"  [(ngModel)]="lat" value="">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+              <input matInput placeholder="Patient Longitude"  [(ngModel)]="lng" value="">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="postForDoners()">Post</button>
+            <br>
+            
+          <button mat-raised-button color="primary" (click)="getLocation()">Get Location</button>
+        
+  </div>
+
+  <h3 class="text-center">HELP MAP!</h3>
+  <agm-map  [latitude]="13.0123582" [longitude]="80.2361237" [zoom]=10>
+    <span *ngFor="let bloodneeditem of bloodneedlist | async">
+    <agm-marker  [latitude]="bloodneeditem.data.patientposlat" [longitude]="bloodneeditem.data.patientposlong"></agm-marker>
+  </span>
+  </agm-map>
+  <h3 class="text-center">Patients in Need of Blood</h3>
+  <ul class="bloodneedlist" *ngFor="let bloodneeditem of bloodneedlist | async">
+      <li>Patient Name - {{bloodneeditem.data.patientname}}<br>
+      {{bloodneeditem.data.patientbloodgroup}}<br>
+      {{bloodneeditem.data.patientcontactnumber}}<br>
+      {{bloodneeditem.data.donorstatus}}<br>
+      <button *ngIf="bloodneeditem.data.donorstatus == false" mat-raised-button color="warn" (click)="gotDonor(bloodneeditem.id)">True</button>
+      <button *ngIf="bloodneeditem.data.donorstatus == true" mat-raised-button style="background-color:green;color:white" >Yes, We Got a Donor</button></li>
+      <button mat-raised-button (click)="setToFalse(bloodneeditem.id)">False</button>
+      <button mat-raised-button (click)="delete(bloodneeditem.id)">Delete</button>
+    </ul>
+
+</div></div></div>

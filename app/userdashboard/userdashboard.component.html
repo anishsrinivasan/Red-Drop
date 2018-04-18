@@ -1,0 +1,50 @@
+<div class="container-fluid userdashboardcomponent">
+    <div class="row">
+        <div class="col-md-3 usersidebar text-center">
+                <img style="width:100px;" class="splashscreenlogo" src="/assets/reddrop_logo.png">
+                <h2><strong>Red Drop</strong></h2>
+                <br>
+              Hello,  <strong>{{name}}</strong>
+              <br>
+              Hope you're doing good!
+              <br><br>
+              <h2 style="color:#f1543f">{{bloodgroup}}</h2>
+              <br>
+              <p>You have done <strong><span id="totaldonationnum">{{totaldonations}}</span></strong> Donations so far!</p>
+              {{email}}
+              <br>
+              <br>
+              <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Location Proximity"  [(ngModel)]="locationproximity" value="">
+                  </mat-form-field>
+                  <button mat-raised-button color="warn" style="background-color: #2c3e50" (click)="getRecords()">Refresh Records</button>
+                  <br><br>
+              <button mat-raised-button color="warn" style="background-color: #2c3e50" (click)="getLocation()">Get Current Location</button>
+              <br><br>
+              <button mat-raised-button color="warn" style="background-color: #2c3e50" (click)="userLogout()">Log Out! :( </button>
+
+        </div>
+        <div class="col-md-9 userdashboard">
+            <h1 class="text-center">Someone needs your Help!</h1>
+            <h5 class="text-center">Donate Blood, Donate Smile :) </h5>
+                    <br>
+                    <p class="text-center">Current Location Proximity - <strong>{{locationproximity}} KMs</strong> </p>
+                        <mat-card *ngIf="bloodneedlistarray?.length == 0">Sorry, No Need of your help now</mat-card>
+                        <mat-card class="" *ngFor="let bloodneeditem of bloodneedlistarray">
+                            Patient Name:  <strong>{{bloodneeditem.patientname}}</strong><br>
+                            Patient Blood Group : {{bloodneeditem.patientbloodgroup}}<br>
+                            Patient Contact : {{bloodneeditem.patientcontactnumber}}<br>
+                            <br>
+                            <button  *ngIf="bloodneeditem.donorstatus == false" mat-raised-button color="warn"  (click)="gotDonor(bloodneeditem.bloodpostid)">Save me!</button>
+      <button  *ngIf="bloodneeditem.donorstatus == true" mat-raised-button style="background-color:green;color:white" >You just saved one Life!</button>
+                        <br>
+                            <br>
+                        <agm-map  [latitude]="bloodneeditem.patientposlat" [longitude]="bloodneeditem.patientposlong" [zoom]=16>
+                                <agm-marker  [latitude]="bloodneeditem.patientposlat" [longitude]="bloodneeditem.patientposlong"></agm-marker>
+                              </agm-map></mat-card>
+        </div>
+    </div>
+</div>
+
+
+
